@@ -32,7 +32,7 @@ val retrofit: Retrofit = Retrofit.Builder()
 //    .client(httpClient.build())
     .build()
 
-const val APIKEY = "api key was here"
+const val APIKEY = "552f756ef56448efa5e183126222112"
 
 interface WeatherApiService {
     @GET("current.json?key=$APIKEY")

@@ -149,7 +149,6 @@ fun ForecastForDay.toDomainModel(): DayDomainObject {
 }
 
 fun Astro.toDomainModel(): AstroDataDomainObject {
-    // These need to observe the clock format setting
     val sunrise = LocalTime
         .parse(sunrise, DateTimeFormatter.ofPattern("hh:mm a", Locale.US))
         .format(DateTimeFormatter.ofPattern("kk:mm"))

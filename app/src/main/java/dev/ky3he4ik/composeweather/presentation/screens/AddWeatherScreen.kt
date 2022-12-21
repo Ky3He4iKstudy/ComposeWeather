@@ -79,7 +79,6 @@ fun AddWeatherScreen(
                         query = location,
                         queryLabel = "Search",
                         searchResults =
-                        // This will clear results if query is cleared with backspace key
                         if (location.isBlank()) {
                             emptyList()
                         } else {
@@ -189,7 +188,6 @@ private suspend fun addWeather(
             }
         }
 
-        //Navigate back to main screen
         withContext(Dispatchers.Main) {
             run(navAction)
         }

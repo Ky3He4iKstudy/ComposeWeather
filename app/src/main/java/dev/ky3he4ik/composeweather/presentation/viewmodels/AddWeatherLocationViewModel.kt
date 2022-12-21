@@ -84,11 +84,6 @@ class AddWeatherLocationViewModel(
     }
 
     suspend fun storeNetworkDataInDatabase(location: String): Boolean {
-        /**
-         * This runs on a background thread by default so any value modified within this scoupe cannot
-         * be returned outside of the scope
-         */
-
         val networkError: Boolean =
             when (val response = weatherRepository.getWeather(location)) {
                 is NetworkResult.Success -> {
@@ -115,7 +110,6 @@ class AddWeatherLocationViewModel(
         }
         return null
     }
-
 }
 
 sealed class SearchViewData {

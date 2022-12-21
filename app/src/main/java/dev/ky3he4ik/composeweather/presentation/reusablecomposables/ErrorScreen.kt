@@ -9,7 +9,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.ky3he4ik.composeweather.presentation.animations.pressClickEffect
 
 @Composable
 fun ErrorScreen(
@@ -28,7 +27,6 @@ fun ErrorScreen(
         )
         Spacer(modifier = Modifier.size(8.dp))
         Button(
-            modifier = Modifier.pressClickEffect(),
             onClick = retryAction
         ) {
             Text("Retry")

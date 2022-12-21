@@ -95,7 +95,6 @@ fun ForecastListItem(
         modifier = Modifier
             .padding(8.dp)
             .height(125.dp)
-            .pressClickEffect(),
         onClick = { onClick(date) },
     ) {
         Box(
@@ -121,7 +120,6 @@ fun ForecastListItem(
                     Text(
                         text = days.day.condition.text,
                         fontSize = 18.sp,
-                        //maxLines = 1
                     )
                 }
                 Spacer(modifier = Modifier.weight(.5f))

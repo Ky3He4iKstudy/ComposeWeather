@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.ky3he4ik.composeweather.R
 import dev.ky3he4ik.composeweather.model.WeatherDomainObject
-import dev.ky3he4ik.composeweather.presentation.animations.pressClickEffect
 import dev.ky3he4ik.composeweather.presentation.reusablecomposables.ErrorScreen
 import dev.ky3he4ik.composeweather.presentation.reusablecomposables.LoadingScreen
 import dev.ky3he4ik.composeweather.presentation.reusablecomposables.WeatherConditionIcon
@@ -84,9 +83,7 @@ fun WeatherListScreen(
     val listState = rememberLazyListState()
     val showScrollToTopButton by remember { derivedStateOf { listState.firstVisibleItemIndex > 0 } }
     val showAddWeatherFab by remember { derivedStateOf { listState.firstVisibleItemIndex == 0 } }
-    //val scaffoldState = rememberScaffoldState()
     Scaffold(
-        //    scaffoldState = scaffoldState,
         floatingActionButton =
         {
             AnimatedVisibility(
@@ -151,7 +148,6 @@ fun WeatherListScreen(
                     },
                     modifier = Modifier
                         .size(32.dp)
-                        .pressClickEffect()
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_baseline_expand_less_24),
@@ -165,7 +161,6 @@ fun WeatherListScreen(
 
 }
 
-// FAB for add weather
 @Composable
 fun AddWeatherFab(
     onClick: () -> Unit
@@ -175,7 +170,6 @@ fun AddWeatherFab(
         shape = RoundedCornerShape(size = 18.dp),
         modifier = Modifier
             .size(64.dp)
-            .pressClickEffect()
     ) {
         Icon(
             imageVector = Icons.Filled.Add,
@@ -198,8 +192,7 @@ fun WeatherListItem(
             .padding(8.dp)
             .height(175.dp)
             .fillMaxWidth()
-            .pressClickEffect(),
-        onClick = { onClick(weatherDomainObject.location_coord) },
+                onClick = { onClick(weatherDomainObject.location_coord) },
     ) {
         Box(
             modifier = Modifier.fillMaxSize()
@@ -218,7 +211,6 @@ fun WeatherListItem(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(8.dp)
-//                        .align(Alignment.Center),
 
                 ) {
                     Column(modifier = Modifier.weight(10f)) {
