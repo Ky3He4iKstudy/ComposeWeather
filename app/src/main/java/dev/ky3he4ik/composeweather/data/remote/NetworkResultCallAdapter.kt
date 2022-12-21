@@ -7,13 +7,6 @@ import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 
 
-/**
- *  a custom Retrofit CallAdapter, which allows you to delegate call responses;
- *  you can also return a preferred type in the Retrofit side.he Retrofit CallAdapter handles
- *  Retrofit responses and exceptions, so the responsibility of the data layer has been
- *  significantly reduced. Before, we had to use the hadnleApi function with every API call
- */
-
 class NetworkResultCallAdapter(
     private val resultType: Type
 ) : CallAdapter<Type, Call<NetworkResult<Type>>> {

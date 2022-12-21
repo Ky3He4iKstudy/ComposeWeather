@@ -12,18 +12,14 @@ import androidx.compose.ui.semantics.testTag
 import androidx.compose.ui.unit.dp
 
 
-/**
- * The screen displaying the loading message.
- */
 @Composable
-fun LoadingScreen(modifier: Modifier = Modifier) {
+fun LoadingScreen() {
     Box(
         contentAlignment = Alignment.Center,
-        modifier = modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize()
     ) {
         CircularProgressIndicator(
-            modifier = Modifier
-                .size(128.dp)
+            modifier = Modifier.size(128.dp)
                 .semantics { testTag = "Loading" })
     }
 }

@@ -1,10 +1,7 @@
 package dev.ky3he4ik.composeweather.model
 
-import androidx.compose.ui.graphics.Color
-import dev.ky3he4ik.composeweather.data.remote.dto.Condition
-
 data class DayDomainObject(
-    val condition: Condition,
+    val condition: WeatherCondition,
     val avgtemp_f: Double,
     val maxtemp_f: Double,
     val mintemp_f: Double,

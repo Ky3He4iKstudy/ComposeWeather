@@ -13,32 +13,21 @@ data class WeatherContainer(
     val current: CurrentWeatherData
 )
 
-/**
- * Convert Network results to database objects
- */
 fun WeatherContainer.asDatabaseModel(
     name: String,
-    dbSortOrder: Int
 ): WeatherEntity {
     return WeatherEntity(
         loc = name,
         cityName = location.name,
-        sortOrder = dbSortOrder
     )
 }
 
 fun WeatherContainer.asDomainModel(loc: String): WeatherDomainObject {
-
     val locationDomain = location.toDomainModel()
-
     val localTime = Instant
         .ofEpochSecond(location.localtime_epoch)
         .atZone(ZoneId.of(location.tz_id))
-        .format(
-            DateTimeFormatter
-                .ofPattern("MMM dd")
-        )
-
+        .format(DateTimeFormatter.ofPattern("MMM dd"))
 
     return WeatherDomainObject(
         time = localTime,

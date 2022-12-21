@@ -1,15 +1,12 @@
 package dev.ky3he4ik.composeweather.model
 
-import androidx.compose.ui.graphics.Color
-import dev.ky3he4ik.composeweather.data.remote.dto.Condition
-
 data class Hours(
     val time_epoch: Int,
     val time: String,
     val temp_f: Double,
     val temp_c: Double,
     val is_day: Int,
-    val condition: Condition,
+    val condition: WeatherCondition,
     val wind_mph: Double,
     val wind_kph: Double,
     val wind_dir: String,

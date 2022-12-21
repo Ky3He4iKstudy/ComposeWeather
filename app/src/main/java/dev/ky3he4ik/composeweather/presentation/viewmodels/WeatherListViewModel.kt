@@ -33,10 +33,6 @@ class WeatherListViewModel(
 
     fun getLocationsFromDatabase() = weatherDao.getLocationsFlow()
 
-
-    fun getWeather(location: String) = weatherDao.getWeatherByLocation(location)
-
-
     fun deleteWeather(loc: String) {
         viewModelScope.launch(Dispatchers.IO) {
             weatherDao.delete(loc)

@@ -19,17 +19,3 @@ data class WeatherDomainObject(
 data class ForecastDomainObject(
     val days: List<Days>,
 )
-
-
-
-
-
-
-
-
-
-
-
-
-
-

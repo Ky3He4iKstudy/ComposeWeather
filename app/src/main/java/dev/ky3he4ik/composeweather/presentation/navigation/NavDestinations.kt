@@ -6,9 +6,6 @@ import dev.ky3he4ik.composeweather.presentation.navigation.MainWeatherList.dateA
 import dev.ky3he4ik.composeweather.presentation.navigation.MainWeatherList.locationArg
 
 
-/**
- * Contract for information needed on every navigation destination
- */
 interface NavDestinations {
     val route: String
 }
@@ -25,7 +22,6 @@ object MainWeatherList: NavDestinations {
 
 object AddLocation: NavDestinations {
     override val route = "addLocation"
-    val routeWithArgs = "$route/{${locationArg}}"
 }
 
 object DailyForecast: NavDestinations {
@@ -37,19 +33,3 @@ object HourlyForecast: NavDestinations {
     override val route = "hourlyForecast"
     val routeWithArgs = "$route/{${locationArg}}/{${dateArg}}"
 }
-
-object Alerts: NavDestinations {
-    override val route = "alerts"
-    val routeWithArgs = "$route/{${locationArg}}"
-}
-
-
-//val screens = listOf(
-//    MainWeatherList.route,
-//    DailyForecast.route,
-//    HourlyForecast.route,
-//    AddLocation.route,
-//    InterfaceMenu.route,
-//    Alerts.route,
-//    NotificationsMenu.route
-//)

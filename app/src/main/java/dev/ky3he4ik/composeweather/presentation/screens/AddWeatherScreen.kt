@@ -76,7 +76,6 @@ fun AddWeatherScreen(
                     verticalArrangement = Arrangement.Top
                 ) {
                     AutoCompleteTextView(
-                        modifier = Modifier.fillMaxWidth(),
                         query = location,
                         queryLabel = "Search",
                         searchResults =

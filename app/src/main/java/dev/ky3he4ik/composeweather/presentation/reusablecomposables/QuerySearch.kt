@@ -16,21 +16,16 @@ import androidx.compose.ui.text.input.KeyboardType
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun QuerySearch(
-    modifier: Modifier = Modifier,
     query: String,
     label: String,
     onDoneActionClick: () -> Unit = {},
     onClearClick: () -> Unit = {},
     onQueryChanged: (String) -> Unit
 ) {
-
-
     var showClearButton by remember { mutableStateOf(false) }
 
-
-
    TextField(
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .onFocusChanged { focusState ->
                 showClearButton = (focusState.isFocused)

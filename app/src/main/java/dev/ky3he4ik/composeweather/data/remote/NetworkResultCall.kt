@@ -5,13 +5,14 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.Request
 import okio.Timeout
-import retrofit2.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class NetworkResultCall<T : Any>(
     private val proxy: Call<T>,
 ) : Call<NetworkResult<T>> {
-
     override fun enqueue(callback: Callback<NetworkResult<T>>) {
         val scope = CoroutineScope(Dispatchers.IO)
         proxy.enqueue(object : Callback<T> {
@@ -36,7 +37,9 @@ class NetworkResultCall<T : Any>(
     override fun timeout(): Timeout = proxy.timeout()
     override fun isExecuted(): Boolean = proxy.isExecuted
     override fun isCanceled(): Boolean = proxy.isCanceled
-    override fun cancel() { proxy.cancel() }
+    override fun cancel() {
+        proxy.cancel()
+    }
 }
 
 

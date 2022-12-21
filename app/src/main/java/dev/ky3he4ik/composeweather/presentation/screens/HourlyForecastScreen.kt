@@ -23,54 +23,40 @@ import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun HourlyForecastScreen(
-    modifier: Modifier = Modifier,
     location: String,
     date: String,
     mainViewModel: MainViewModel
 ) {
     val hourlyForecastViewModel = getViewModel<HourlyForecastViewModel>()
-    // update title bar
     LaunchedEffect(Unit) {
         mainViewModel.updateActionBarTitle(date)
     }
     val context = LocalContext.current
     val uiState = remember {
         hourlyForecastViewModel.getHourlyForecast(
-            location,
-            context.resources
+            location
         )
     }.collectAsState()
 
     when (uiState.value) {
-        is HourlyForecastViewData.Loading -> LoadingScreen(modifier)
+        is HourlyForecastViewData.Loading -> LoadingScreen()
         is HourlyForecastViewData.Done -> HourlyForecastList(
             (uiState.value as HourlyForecastViewData.Done).forecastDomainObject.days.first { it.dayOfWeek == date }.hours,
-            modifier,
         )
-        is HourlyForecastViewData.Error -> ErrorScreen(
-            { hourlyForecastViewModel.refresh() },
-            modifier
-        )
+        is HourlyForecastViewData.Error -> ErrorScreen { hourlyForecastViewModel.refresh() }
     }
 }
 
 
-/**
- * Screen displaying Daily Forecast
- */
-
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun HourlyForecastList(
     hoursList: List<Hours>,
-    modifier: Modifier = Modifier,
 ) {
     val listState = rememberLazyListState()
 
     Box {
         LazyColumn(
-            modifier = modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             contentPadding = PaddingValues(4.dp),
             state = listState
         ) {

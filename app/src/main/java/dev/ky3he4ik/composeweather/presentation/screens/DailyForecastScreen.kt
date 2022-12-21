@@ -20,22 +20,18 @@ import dev.ky3he4ik.composeweather.presentation.reusablecomposables.ErrorScreen
 import dev.ky3he4ik.composeweather.presentation.reusablecomposables.LoadingScreen
 import dev.ky3he4ik.composeweather.presentation.reusablecomposables.WeatherConditionIcon
 import dev.ky3he4ik.composeweather.presentation.viewmodels.*
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import org.koin.androidx.compose.getViewModel
 
 
 @Composable
 fun DailyForecastScreen(
-    modifier: Modifier = Modifier,
     onClick: (String) -> Unit,
     location: String,
     mainViewModel: MainViewModel
 ) {
     val dailyForecastViewModel = getViewModel<DailyForecastViewModel>()
-    // update title bar
 
-    // This only seems to work if I pass the viewmodel all the way down from main activity and only have one instance of main view model, grabbing it from Koin doesnt work
     LaunchedEffect(Unit) {
         mainViewModel.updateActionBarTitle(
             dailyForecastViewModel.getWeather(location).firstOrNull()?.cityName ?: "ERROR"
@@ -48,35 +44,28 @@ fun DailyForecastScreen(
     }.collectAsState()
 
     when (state) {
-        is ForecastViewData.Loading -> LoadingScreen(modifier)
+        is ForecastViewData.Loading -> LoadingScreen()
         is ForecastViewData.Done -> {
             ForecastList(
                 (state as ForecastViewData.Done).forecastDomainObject,
-                modifier,
                 onClick,
             )
         }
-        is ForecastViewData.Error -> ErrorScreen({ dailyForecastViewModel.refresh() }, modifier)
+        is ForecastViewData.Error -> ErrorScreen({ dailyForecastViewModel.refresh() })
     }
 }
-
-
-/**
- * Screen displaying Daily Forecast
- */
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ForecastList(
     forecast: ForecastDomainObject,
-    modifier: Modifier = Modifier,
     onClick: (String) -> Unit,
 ) {
     Scaffold { innerPadding ->
 
         Box {
             LazyColumn(
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 8.dp),
                 contentPadding = innerPadding
@@ -99,7 +88,6 @@ fun ForecastList(
 @Composable
 fun ForecastListItem(
     days: Days,
-    modifier: Modifier = Modifier,
     onClick: (String) -> Unit,
 ) {
     val date = days.dayOfWeek
@@ -111,7 +99,7 @@ fun ForecastListItem(
         onClick = { onClick(date) },
     ) {
         Box(
-            modifier = modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize()
         ) {
             Row(
                 modifier = Modifier
@@ -119,7 +107,7 @@ fun ForecastListItem(
                     .padding(8.dp)
                     .align(Alignment.Center)
             ) {
-                Column(modifier = modifier.weight(6.5f)) {
+                Column(modifier = Modifier.weight(6.5f)) {
                     Text(
                         text = days.dayOfWeek,
                         fontWeight = FontWeight.Bold,
@@ -141,7 +129,7 @@ fun ForecastListItem(
                 Column(modifier = Modifier.weight(8f)) {
 
                     Row(
-                        modifier = modifier.padding(top = 5.dp),
+                        modifier = Modifier.padding(top = 5.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
 

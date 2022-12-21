@@ -1,10 +1,6 @@
 package dev.ky3he4ik.composeweather.data.remote.dto
 
-import dev.ky3he4ik.composeweather.domain.model.AstroDataDomainObject
-import dev.ky3he4ik.composeweather.model.DayDomainObject
-import dev.ky3he4ik.composeweather.model.Days
-import dev.ky3he4ik.composeweather.model.ForecastDomainObject
-import dev.ky3he4ik.composeweather.model.Hours
+import dev.ky3he4ik.composeweather.model.*
 import kotlinx.serialization.Serializable
 import java.time.LocalDate
 import java.time.LocalTime
@@ -127,9 +123,17 @@ fun Day.toDomainModel(): Days {
     )
 }
 
+fun Condition.toDomainModel(): WeatherCondition {
+    return WeatherCondition(
+        text = text,
+        icon = icon,
+        code = code
+    )
+}
+
 fun ForecastForDay.toDomainModel(): DayDomainObject {
     return DayDomainObject(
-        condition = condition,
+        condition = condition.toDomainModel(),
         avgtemp_c = avgtemp_c,
         avgtemp_f = avgtemp_f,
         maxtemp_c = maxtemp_c,
@@ -154,7 +158,6 @@ fun Astro.toDomainModel(): AstroDataDomainObject {
         .format(DateTimeFormatter.ofPattern("kk:mm"))
 
 
-    // Remove 0 prefix if using 12 hour time format
     return AstroDataDomainObject(
         moon_phase = moon_phase,
         sunrise = sunrise,
@@ -163,17 +166,13 @@ fun Astro.toDomainModel(): AstroDataDomainObject {
 }
 
 fun Hour.toDomainModel(): Hours {
-    val formattedTime = LocalTime.parse(
-        time.substring(11) // Remove date from time
-    ).format(DateTimeFormatter.ofPattern("kk:mm"))
-
     return Hours(
         time_epoch = time_epoch,
-        time = formattedTime,
+        time = time.substring(11) /* Remove date from time */,
         temp_f = temp_f,
         temp_c = temp_c,
         is_day = is_day,
-        condition = condition,
+        condition = condition.toDomainModel(),
         wind_mph = wind_mph,
         wind_kph = wind_kph,
         wind_dir = wind_dir,

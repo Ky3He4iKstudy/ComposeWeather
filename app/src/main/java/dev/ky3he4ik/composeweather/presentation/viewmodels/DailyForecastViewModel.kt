@@ -13,23 +13,16 @@ import kotlinx.coroutines.flow.*
 
 sealed class ForecastViewData {
     object Loading : ForecastViewData()
-    class Error(val code: Int, val message: String?) : ForecastViewData()
+    class Error(val code: Int) : ForecastViewData()
     class Done(val forecastDomainObject: ForecastDomainObject) : ForecastViewData()
 }
 
-/**
- * [ViewModel] to provide data to the WeatherLocationDetailFragment
- */
-
-// Pass an application as a parameter to the viewmodel constructor which is the contect passed to the singleton database object
 class DailyForecastViewModel(
     private val weatherRepository: WeatherRepository,
     private val weatherDao: WeatherDao,
     application: Application
 ) :
     AndroidViewModel(application) {
-
-    //The data source this viewmodel will fetch results from
 
     private val refreshFlow = MutableSharedFlow<Unit>(1, 1, BufferOverflow.DROP_OLDEST)
         .apply {
@@ -61,42 +54,16 @@ class DailyForecastViewModel(
                         is NetworkResult.Failure -> emit(
                             ForecastViewData.Error(
                                 code = response.code,
-                                message = response.message
                             )
                         )
                         is NetworkResult.Exception -> emit(
                             ForecastViewData.Error(
                                 code = 0,
-                                message = response.e.message
                             )
                         )
                     }
                 }
             }.stateIn(viewModelScope, SharingStarted.Lazily, ForecastViewData.Loading)
-    }
-
-
-// create a view model factory that takes a WeatherDao as a property and
-//  creates a WeatherViewModel
-
-    class DailyForecastViewModelFactory
-        (
-        private val weatherRepository: WeatherRepository,
-        private val weatherDao: WeatherDao,
-        val app: Application
-    ) :
-        ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(DailyForecastViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return DailyForecastViewModel(
-                    weatherRepository,
-                    weatherDao,
-                    app
-                ) as T
-            }
-            throw IllegalArgumentException("Unknown ViewModel class")
-        }
     }
 }
 

@@ -13,14 +13,13 @@ import org.koin.core.context.startKoin
 import org.koin.dsl.module
 
 class MyApplication : Application() {
-    val database: WeatherDatabase by lazy { WeatherDatabase.getDatabase(this) }
+    private val database: WeatherDatabase by lazy { WeatherDatabase.getDatabase(this) }
 
     override fun onCreate() {
         super.onCreate()
 
 
         val appModule = module {
-            // Singleton for the Weather Repository implementation passed to all viewmodels
             single<WeatherRepository> {
                 WeatherRepositoryImpl(get())
             }
@@ -34,7 +33,6 @@ class MyApplication : Application() {
             }
 
 
-            // Use factory to create multiple instances for each viewmodel
             viewModel {
                 MainViewModel()
             }
@@ -45,7 +43,7 @@ class MyApplication : Application() {
                 DailyForecastViewModel(get(), get(), get())
             }
             viewModel {
-                HourlyForecastViewModel(get(), get(), get())
+                HourlyForecastViewModel(get(), get())
             }
             viewModel {
                 AddWeatherLocationViewModel(get(), get(), get())

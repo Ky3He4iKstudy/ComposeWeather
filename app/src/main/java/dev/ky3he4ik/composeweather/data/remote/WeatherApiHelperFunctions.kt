@@ -3,12 +3,6 @@ package dev.ky3he4ik.composeweather.data.remote
 import retrofit2.HttpException
 import retrofit2.Response
 
-/**
- * The handleApi function receives an executable lambda function, which returns a Retrofit response.
- * After executing the lambda function, the handleApi function returns NetworkResult.Success if the
- * response is successful and the body data is a non-null value.
- */
-
 suspend fun <T : Any> handleApi(
     execute: suspend () -> Response<T>
 ): NetworkResult<T> {
@@ -26,14 +20,6 @@ suspend fun <T : Any> handleApi(
         NetworkResult.Exception(e)
     }
 }
-
-/**
- * Each layer can expect the result type of the Retrofit API call to be NetworkResult,
- * so you can write useful extensions for the NetworkResult class.
- *
- * For example, you can perform a given action on the encapsulated value or exception if an
- * instance of the NetworkResult represents its dedicated response type as seen in the example below:
- */
 
 suspend fun <T : Any> NetworkResult<T>.onSuccess(
     executable: suspend (T) -> Unit

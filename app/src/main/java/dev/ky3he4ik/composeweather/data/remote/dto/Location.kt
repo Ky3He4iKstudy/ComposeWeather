@@ -3,9 +3,6 @@ package dev.ky3he4ik.composeweather.data.remote.dto
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Location(val location: LocationData)
-
-@Serializable
 data class LocationData(
     val name: String,
     val region: String,

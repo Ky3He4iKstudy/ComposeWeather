@@ -1,4 +1,4 @@
-package dev.ky3he4ik.composeweather.domain.model
+package dev.ky3he4ik.composeweather.model
 
 data class AstroDataDomainObject(
     val sunrise: String,

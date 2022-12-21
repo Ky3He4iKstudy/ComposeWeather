@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.ky3he4ik.composeweather.R
 import dev.ky3he4ik.composeweather.model.WeatherDomainObject
-import dev.ky3he4ik.composeweather.presentation.animations.Pulsating
 import dev.ky3he4ik.composeweather.presentation.animations.pressClickEffect
 import dev.ky3he4ik.composeweather.presentation.reusablecomposables.ErrorScreen
 import dev.ky3he4ik.composeweather.presentation.reusablecomposables.LoadingScreen
@@ -36,7 +35,6 @@ import kotlinx.coroutines.launch
 fun MainWeatherListScreen(
     weatherUiState: WeatherListState,
     retryAction: () -> Unit,
-    modifier: Modifier = Modifier,
     onClick: (String) -> Unit,
     addWeatherFabAction: () -> Unit,
     weatherListViewModel: WeatherListViewModel,
@@ -49,23 +47,19 @@ fun MainWeatherListScreen(
     when (weatherUiState) {
         is WeatherListState.Empty -> WeatherListScreen(
             emptyList(),
-            modifier,
             onClick,
             addWeatherFabAction,
             weatherListViewModel
         )
-        is WeatherListState.Loading -> LoadingScreen(modifier)
+        is WeatherListState.Loading -> LoadingScreen()
         is WeatherListState.Success -> WeatherListScreen(
             weatherUiState.weatherDomainObjects,
-            modifier,
             onClick,
             addWeatherFabAction,
             weatherListViewModel
         )
         is WeatherListState.Error -> ErrorScreen(
             retryAction,
-            modifier,
-            message = weatherUiState.message
         )
     }
 }
@@ -79,7 +73,6 @@ fun MainWeatherListScreen(
 @Composable
 fun WeatherListScreen(
     weatherDomainObjectList: List<WeatherDomainObject>,
-    modifier: Modifier = Modifier,
     onClick: (String) -> Unit,
     addWeatherFabAction: () -> Unit,
     weatherListViewModel: WeatherListViewModel,
@@ -96,29 +89,19 @@ fun WeatherListScreen(
         //    scaffoldState = scaffoldState,
         floatingActionButton =
         {
-            if (weatherDomainObjectList.isEmpty()) {
-                Pulsating {
-                    AddWeatherFab(
-                        onClick = addWeatherFabAction
-                    )
-                }
-
-            } else {
-                AnimatedVisibility(
-                    visible = showAddWeatherFab,
-                    enter = scaleIn(),
-                    exit = scaleOut()
-                ) {
-                    AddWeatherFab(
-                        onClick = addWeatherFabAction
-                    )
-                }
+            AnimatedVisibility(
+                visible = showAddWeatherFab,
+                enter = scaleIn(),
+                exit = scaleOut()
+            ) {
+                AddWeatherFab(
+                    onClick = addWeatherFabAction
+                )
             }
         },
         floatingActionButtonPosition = FabPosition.End
     ) { innerPadding ->
 
-        // Box(modifier = Modifier.pullRefresh(refreshState)) {
         Box {
 
             if (weatherDomainObjectList.isEmpty()) {
@@ -134,7 +117,7 @@ fun WeatherListScreen(
                 }
             }
             LazyColumn(
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxWidth()
                     .background(MaterialTheme.colorScheme.background)
                     .padding(top = 8.dp),
@@ -185,13 +168,12 @@ fun WeatherListScreen(
 // FAB for add weather
 @Composable
 fun AddWeatherFab(
-    modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
     FloatingActionButton(
         onClick = onClick,
         shape = RoundedCornerShape(size = 18.dp),
-        modifier = modifier
+        modifier = Modifier
             .size(64.dp)
             .pressClickEffect()
     ) {
