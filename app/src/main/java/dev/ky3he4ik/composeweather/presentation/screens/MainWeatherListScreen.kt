@@ -25,7 +25,6 @@ import dev.ky3he4ik.composeweather.model.WeatherDomainObject
 import dev.ky3he4ik.composeweather.presentation.reusablecomposables.ErrorScreen
 import dev.ky3he4ik.composeweather.presentation.reusablecomposables.LoadingScreen
 import dev.ky3he4ik.composeweather.presentation.reusablecomposables.WeatherConditionIcon
-import dev.ky3he4ik.composeweather.presentation.viewmodels.MainViewModel
 import dev.ky3he4ik.composeweather.presentation.viewmodels.WeatherListState
 import dev.ky3he4ik.composeweather.presentation.viewmodels.WeatherListViewModel
 import kotlinx.coroutines.launch
@@ -37,12 +36,7 @@ fun MainWeatherListScreen(
     onClick: (String) -> Unit,
     addWeatherFabAction: () -> Unit,
     weatherListViewModel: WeatherListViewModel,
-    mainViewModel: MainViewModel
 ) {
-
-    LaunchedEffect(Unit) {
-        mainViewModel.updateActionBarTitle("places")
-    }
     when (weatherUiState) {
         is WeatherListState.Empty -> WeatherListScreen(
             emptyList(),
@@ -59,6 +53,7 @@ fun MainWeatherListScreen(
         )
         is WeatherListState.Error -> ErrorScreen(
             retryAction,
+            weatherUiState.message
         )
     }
 }
@@ -77,7 +72,7 @@ fun WeatherListScreen(
     weatherListViewModel: WeatherListViewModel,
 ) {
 
-    Log.e("Weather", weatherDomainObjectList.joinToString { it.toString() })
+    Log.d("Weather/itemsList", weatherDomainObjectList.joinToString { it.toString() })
     val coroutineScope = rememberCoroutineScope()
 
     val listState = rememberLazyListState()
@@ -191,8 +186,8 @@ fun WeatherListItem(
         modifier = Modifier
             .padding(8.dp)
             .height(175.dp)
-            .fillMaxWidth()
-                onClick = { onClick(weatherDomainObject.location_coord) },
+            .fillMaxWidth(),
+        onClick = { onClick(weatherDomainObject.location_coord) },
     ) {
         Box(
             modifier = Modifier.fillMaxSize()

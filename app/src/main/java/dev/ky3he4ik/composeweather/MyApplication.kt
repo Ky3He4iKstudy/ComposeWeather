@@ -31,16 +31,11 @@ class MyApplication : Application() {
             single {
                 database.getWeatherDao()
             }
-
-
-            viewModel {
-                MainViewModel()
-            }
             viewModel {
                 WeatherListViewModel(get(), get(), get())
             }
             viewModel {
-                DailyForecastViewModel(get(), get(), get())
+                DailyForecastViewModel(get(), get())
             }
             viewModel {
                 HourlyForecastViewModel(get(), get())

@@ -15,12 +15,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.ky3he4ik.composeweather.model.Days
 import dev.ky3he4ik.composeweather.model.ForecastDomainObject
-import dev.ky3he4ik.composeweather.presentation.animations.pressClickEffect
 import dev.ky3he4ik.composeweather.presentation.reusablecomposables.ErrorScreen
 import dev.ky3he4ik.composeweather.presentation.reusablecomposables.LoadingScreen
 import dev.ky3he4ik.composeweather.presentation.reusablecomposables.WeatherConditionIcon
 import dev.ky3he4ik.composeweather.presentation.viewmodels.*
-import kotlinx.coroutines.flow.firstOrNull
 import org.koin.androidx.compose.getViewModel
 
 
@@ -28,15 +26,9 @@ import org.koin.androidx.compose.getViewModel
 fun DailyForecastScreen(
     onClick: (String) -> Unit,
     location: String,
-    mainViewModel: MainViewModel
 ) {
     val dailyForecastViewModel = getViewModel<DailyForecastViewModel>()
 
-    LaunchedEffect(Unit) {
-        mainViewModel.updateActionBarTitle(
-            dailyForecastViewModel.getWeather(location).firstOrNull()?.cityName ?: "ERROR"
-        )
-    }
     val state by remember {
         dailyForecastViewModel.getForecast(
             location,
@@ -51,7 +43,7 @@ fun DailyForecastScreen(
                 onClick,
             )
         }
-        is ForecastViewData.Error -> ErrorScreen({ dailyForecastViewModel.refresh() })
+        is ForecastViewData.Error -> ErrorScreen({ dailyForecastViewModel.refresh() }, "Can't get forecast")
     }
 }
 
@@ -94,7 +86,7 @@ fun ForecastListItem(
     Card(
         modifier = Modifier
             .padding(8.dp)
-            .height(125.dp)
+            .height(125.dp),
         onClick = { onClick(date) },
     ) {
         Box(

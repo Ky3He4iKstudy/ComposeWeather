@@ -8,8 +8,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import dev.ky3he4ik.composeweather.presentation.WeatherApp
-import dev.ky3he4ik.composeweather.presentation.screens.ShowPermissionComposable
-import dev.ky3he4ik.composeweather.presentation.viewmodels.MainViewModel
+import dev.ky3he4ik.composeweather.presentation.screens.RequestPermissionComposable
 import dev.ky3he4ik.composeweather.presentation.viewmodels.WeatherListViewModel
 import dev.ky3he4ik.composeweather.ui.theme.ComposeWeatherTheme
 import org.koin.androidx.viewmodel.ext.android.getViewModel
@@ -25,11 +24,10 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    ShowPermissionComposable()
+                    RequestPermissionComposable()
 
-                    val mainViewModel = getViewModel<MainViewModel>()
                     val weatherListViewModel = getViewModel<WeatherListViewModel>()
-                    WeatherApp(weatherListViewModel, mainViewModel)
+                    WeatherApp(weatherListViewModel)
                 }
             }
         }

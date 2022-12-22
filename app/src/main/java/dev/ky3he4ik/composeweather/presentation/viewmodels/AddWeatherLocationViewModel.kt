@@ -66,11 +66,6 @@ class AddWeatherLocationViewModel(
 
 
     fun setQuery(currentQuery: String) {
-        /**
-         * This will cancel the job every time the query is changed in the search field, if a character
-         * is not typed in 500ms, the queryflow will emit its value. This prevents the API from being
-         * called on every character being typed in the search field
-         */
         searchJob?.cancel()
         searchJob = viewModelScope.launch {
             delay(500)
@@ -107,6 +102,8 @@ class AddWeatherLocationViewModel(
             return locationManager?.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
         } catch (ex: SecurityException) {
             Log.e("AddWeatherLocationViewModel", "Can't get location: lacking permission")
+        } catch (ex: java.lang.Exception) {
+            Log.e("AddWeatherLocationViewModel", ex.message, ex)
         }
         return null
     }

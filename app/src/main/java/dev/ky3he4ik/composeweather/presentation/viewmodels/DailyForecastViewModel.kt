@@ -2,7 +2,6 @@ package dev.ky3he4ik.composeweather.presentation.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.*
-import dev.ky3he4ik.composeweather.data.local.WeatherDao
 import dev.ky3he4ik.composeweather.data.remote.NetworkResult
 import dev.ky3he4ik.composeweather.data.remote.dto.asDomainModel
 import dev.ky3he4ik.composeweather.model.ForecastDomainObject
@@ -19,7 +18,6 @@ sealed class ForecastViewData {
 
 class DailyForecastViewModel(
     private val weatherRepository: WeatherRepository,
-    private val weatherDao: WeatherDao,
     application: Application
 ) :
     AndroidViewModel(application) {
@@ -32,9 +30,6 @@ class DailyForecastViewModel(
     fun refresh() {
         refreshFlow.tryEmit(Unit)
     }
-
-    fun getWeather(zipcode: String) = weatherDao.getWeatherByName(zipcode)
-
 
     @OptIn(ExperimentalCoroutinesApi::class)
     fun getForecast(
@@ -66,7 +61,3 @@ class DailyForecastViewModel(
             }.stateIn(viewModelScope, SharingStarted.Lazily, ForecastViewData.Loading)
     }
 }
-
-
-
-

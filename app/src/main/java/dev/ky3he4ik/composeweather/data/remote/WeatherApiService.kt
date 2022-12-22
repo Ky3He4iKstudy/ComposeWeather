@@ -7,6 +7,8 @@ import dev.ky3he4ik.composeweather.data.remote.dto.WeatherContainer
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -15,13 +17,13 @@ val json = Json {
     ignoreUnknownKeys = true
 }
 
-//val logging = HttpLoggingInterceptor().also {
-//    it.setLevel(HttpLoggingInterceptor.Level.BODY)
-//}
+val logging = HttpLoggingInterceptor().also {
+    it.setLevel(HttpLoggingInterceptor.Level.BODY)
+}
 
-//val httpClient = OkHttpClient.Builder().also {
-//    it.addInterceptor(logging)
-//}
+val httpClient = OkHttpClient.Builder().also {
+    it.addInterceptor(logging)
+}
 
 
 @OptIn(ExperimentalSerializationApi::class)
@@ -29,10 +31,10 @@ val retrofit: Retrofit = Retrofit.Builder()
     .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
     .baseUrl("https://api.weatherapi.com/v1/")
     .addCallAdapterFactory(NetworkResultCallAdapterFactory.create())
-//    .client(httpClient.build())
+    .client(httpClient.build())
     .build()
 
-const val APIKEY = "552f756ef56448efa5e183126222112"
+const val APIKEY = "API KEY HERE"
 
 interface WeatherApiService {
     @GET("current.json?key=$APIKEY")

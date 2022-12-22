@@ -17,7 +17,6 @@ import dev.ky3he4ik.composeweather.presentation.screens.AddWeatherScreen
 import dev.ky3he4ik.composeweather.presentation.screens.DailyForecastScreen
 import dev.ky3he4ik.composeweather.presentation.screens.HourlyForecastScreen
 import dev.ky3he4ik.composeweather.presentation.screens.MainWeatherListScreen
-import dev.ky3he4ik.composeweather.presentation.viewmodels.MainViewModel
 import dev.ky3he4ik.composeweather.presentation.viewmodels.WeatherListViewModel
 
 
@@ -25,7 +24,6 @@ import dev.ky3he4ik.composeweather.presentation.viewmodels.WeatherListViewModel
 @Composable
 fun WeatherApp(
     weatherListViewModel: WeatherListViewModel,
-    mainViewModel: MainViewModel,
     navController: NavHostController = rememberNavController()
 ) {
     Scaffold { innerPadding ->
@@ -51,7 +49,6 @@ fun WeatherApp(
                         onClick = { location -> navController.navigateToDailyForecast(location) },
                         addWeatherFabAction = { navController.navigate(AddLocation.route) },
                         weatherListViewModel = weatherListViewModel,
-                        mainViewModel = mainViewModel
                     )
                 }
             }
@@ -80,7 +77,6 @@ fun WeatherApp(
                                 )
                             },
                             location = location,
-                            mainViewModel = mainViewModel
                         )
                     }
                 }
@@ -94,7 +90,6 @@ fun WeatherApp(
                     HourlyForecastScreen(
                         date = date,
                         location = location,
-                        mainViewModel = mainViewModel
                     )
                 }
 

@@ -1,37 +1,37 @@
 package dev.ky3he4ik.composeweather.presentation.screens
 
-import androidx.compose.animation.*
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.ky3he4ik.composeweather.model.Hours
+import dev.ky3he4ik.composeweather.model.WeatherCondition
 import dev.ky3he4ik.composeweather.presentation.reusablecomposables.ErrorScreen
 import dev.ky3he4ik.composeweather.presentation.reusablecomposables.LoadingScreen
 import dev.ky3he4ik.composeweather.presentation.reusablecomposables.WeatherConditionIcon
-import dev.ky3he4ik.composeweather.presentation.viewmodels.*
+import dev.ky3he4ik.composeweather.presentation.viewmodels.HourlyForecastViewData
+import dev.ky3he4ik.composeweather.presentation.viewmodels.HourlyForecastViewModel
 import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun HourlyForecastScreen(
     location: String,
     date: String,
-    mainViewModel: MainViewModel
 ) {
     val hourlyForecastViewModel = getViewModel<HourlyForecastViewModel>()
-    LaunchedEffect(Unit) {
-        mainViewModel.updateActionBarTitle(date)
-    }
-    val context = LocalContext.current
     val uiState = remember {
         hourlyForecastViewModel.getHourlyForecast(
             location
@@ -43,7 +43,10 @@ fun HourlyForecastScreen(
         is HourlyForecastViewData.Done -> HourlyForecastList(
             (uiState.value as HourlyForecastViewData.Done).forecastDomainObject.days.first { it.dayOfWeek == date }.hours,
         )
-        is HourlyForecastViewData.Error -> ErrorScreen { hourlyForecastViewModel.refresh() }
+        is HourlyForecastViewData.Error -> ErrorScreen(
+            { hourlyForecastViewModel.refresh() },
+            "Can't get forecast"
+        )
     }
 }
 
@@ -132,3 +135,32 @@ fun HourlyForecastListItem(
     }
 }
 
+@Preview()
+@Composable
+fun ShowHourlyPreviw() {
+    HourlyForecastListItem(
+        hour = Hours(
+            1234567,
+            "12:34",
+            3.0,
+            4.0,
+            3,
+            WeatherCondition("blabla", "//cdn.weatherapi.com/weather/64x64/day/116.png", 1003),
+            5.0,
+            6.0,
+            "W",
+            42,
+            7.0,
+            8.0,
+            9,
+            10.0,
+            11,
+            12.0,
+            13.0,
+            14.0,
+            15.0,
+            16.0,
+            17.0
+        )
+    )
+}

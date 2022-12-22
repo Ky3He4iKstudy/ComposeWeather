@@ -1,5 +1,6 @@
 package dev.ky3he4ik.composeweather.presentation.reusablecomposables
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -13,7 +14,9 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun ErrorScreen(
     retryAction: () -> Unit,
+    message: String?,
 ) {
+    Log.e("WeatherApp", message ?: "Unknown error")
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -24,6 +27,11 @@ fun ErrorScreen(
             fontWeight = FontWeight.Bold,
             fontSize = 24.sp,
             text = "Fail"
+        )
+        Text(
+            fontWeight = FontWeight.Bold,
+            fontSize = 24.sp,
+            text = message ?: "Unknown error"
         )
         Spacer(modifier = Modifier.size(8.dp))
         Button(

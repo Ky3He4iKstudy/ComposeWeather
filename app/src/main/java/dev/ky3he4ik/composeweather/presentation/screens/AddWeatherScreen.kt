@@ -1,6 +1,7 @@
 package dev.ky3he4ik.composeweather.presentation.screens
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
@@ -134,7 +135,9 @@ fun AddWeatherScreen(
                     }, label = { Text("Longitude") })
                     Button(onClick = {
                         val loc =
-                            addWeatherLocationViewModel.getCurrentLocation(context) ?: return@Button
+                            addWeatherLocationViewModel.getCurrentLocation(context)
+                        Log.d("AddWeatherScreen", "Location: ${loc.toString()}")
+                        loc ?: return@Button
                         lat = loc.latitude.toString()
                         long = loc.longitude.toString()
                     }) {
