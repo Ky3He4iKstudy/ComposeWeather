@@ -4,7 +4,7 @@ import dev.ky3he4ik.composeweather.data.remote.NetworkResult
 import dev.ky3he4ik.composeweather.data.remote.dto.ForecastContainer
 import dev.ky3he4ik.composeweather.data.remote.dto.Search
 import dev.ky3he4ik.composeweather.data.remote.dto.WeatherContainer
-import dev.ky3he4ik.composeweather.model.WeatherDomainObject
+import dev.ky3he4ik.composeweather.data.local.model.WeatherDomainObject
 
 interface WeatherRepository {
     suspend fun getWeather(location: String): NetworkResult<WeatherContainer>

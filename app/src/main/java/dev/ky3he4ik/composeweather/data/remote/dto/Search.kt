@@ -1,6 +1,6 @@
 package dev.ky3he4ik.composeweather.data.remote.dto
 
-import dev.ky3he4ik.composeweather.model.SearchResult
+import dev.ky3he4ik.composeweather.data.local.model.SearchResult
 import kotlinx.serialization.Serializable
 
 

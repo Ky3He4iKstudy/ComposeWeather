@@ -17,8 +17,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.ky3he4ik.composeweather.model.Hours
-import dev.ky3he4ik.composeweather.model.WeatherCondition
+import dev.ky3he4ik.composeweather.data.local.model.Hours
+import dev.ky3he4ik.composeweather.data.local.model.WeatherCondition
 import dev.ky3he4ik.composeweather.presentation.reusablecomposables.ErrorScreen
 import dev.ky3he4ik.composeweather.presentation.reusablecomposables.LoadingScreen
 import dev.ky3he4ik.composeweather.presentation.reusablecomposables.WeatherConditionIcon

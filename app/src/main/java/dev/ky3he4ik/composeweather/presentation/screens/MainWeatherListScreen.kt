@@ -21,7 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.ky3he4ik.composeweather.R
-import dev.ky3he4ik.composeweather.model.WeatherDomainObject
+import dev.ky3he4ik.composeweather.data.local.model.WeatherDomainObject
 import dev.ky3he4ik.composeweather.presentation.reusablecomposables.ErrorScreen
 import dev.ky3he4ik.composeweather.presentation.reusablecomposables.LoadingScreen
 import dev.ky3he4ik.composeweather.presentation.reusablecomposables.WeatherConditionIcon
@@ -185,7 +185,6 @@ fun WeatherListItem(
     Card(
         modifier = Modifier
             .padding(8.dp)
-            .height(175.dp)
             .fillMaxWidth(),
         onClick = { onClick(weatherDomainObject.location_coord) },
     ) {

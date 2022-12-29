@@ -1,7 +1,7 @@
 package dev.ky3he4ik.composeweather.data.remote.dto
 
 import dev.ky3he4ik.composeweather.data.local.WeatherEntity
-import dev.ky3he4ik.composeweather.model.WeatherDomainObject
+import dev.ky3he4ik.composeweather.data.local.model.WeatherDomainObject
 import kotlinx.serialization.Serializable
 import java.time.Instant
 import java.time.ZoneId

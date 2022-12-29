@@ -13,8 +13,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import dev.ky3he4ik.composeweather.model.Days
-import dev.ky3he4ik.composeweather.model.ForecastDomainObject
+import dev.ky3he4ik.composeweather.data.local.model.Days
+import dev.ky3he4ik.composeweather.data.local.model.ForecastDomainObject
 import dev.ky3he4ik.composeweather.presentation.reusablecomposables.ErrorScreen
 import dev.ky3he4ik.composeweather.presentation.reusablecomposables.LoadingScreen
 import dev.ky3he4ik.composeweather.presentation.reusablecomposables.WeatherConditionIcon
@@ -85,8 +85,7 @@ fun ForecastListItem(
     val date = days.dayOfWeek
     Card(
         modifier = Modifier
-            .padding(8.dp)
-            .height(125.dp),
+            .padding(8.dp),
         onClick = { onClick(date) },
     ) {
         Box(

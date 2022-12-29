@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.*
 import dev.ky3he4ik.composeweather.data.remote.NetworkResult
 import dev.ky3he4ik.composeweather.data.remote.dto.asDomainModel
-import dev.ky3he4ik.composeweather.model.ForecastDomainObject
+import dev.ky3he4ik.composeweather.data.local.model.ForecastDomainObject
 import dev.ky3he4ik.composeweather.repository.WeatherRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.BufferOverflow
@@ -33,13 +33,13 @@ class HourlyForecastViewModel(
 
     @OptIn(ExperimentalCoroutinesApi::class)
     fun getHourlyForecast(
-        zipcode: String
+        location: String
     ): StateFlow<HourlyForecastViewData> {
         return refreshFlow
             .flatMapLatest {
                 flow {
                     emit(HourlyForecastViewData.Loading)
-                    when (val response = weatherRepository.getForecast(zipcode)) {
+                    when (val response = weatherRepository.getForecast(location)) {
                         is NetworkResult.Success -> emit(
                             HourlyForecastViewData.Done(
                                 response.data.asDomainModel()

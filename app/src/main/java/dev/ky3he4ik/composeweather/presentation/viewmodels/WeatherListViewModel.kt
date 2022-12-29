@@ -5,15 +5,12 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import dev.ky3he4ik.composeweather.data.local.WeatherDao
 import dev.ky3he4ik.composeweather.data.remote.NetworkResult
-import dev.ky3he4ik.composeweather.model.WeatherDomainObject
+import dev.ky3he4ik.composeweather.data.local.model.WeatherDomainObject
 import dev.ky3he4ik.composeweather.repository.WeatherRepository
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.*
 
-/**
- * UI state for the Home screen
- */
 sealed interface WeatherListState {
     data class Success(val weatherDomainObjects: List<WeatherDomainObject>) : WeatherListState
     data class Error(val message: String?) : WeatherListState
@@ -31,7 +28,7 @@ class WeatherListViewModel(
         tryEmit(Unit)
     }
 
-    fun getLocationsFromDatabase() = weatherDao.getLocationsFlow()
+    private fun getLocationsFromDatabase() = weatherDao.getLocationsFlow()
 
     fun deleteWeather(loc: String) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -44,9 +41,6 @@ class WeatherListViewModel(
         refreshFlow.tryEmit(Unit)
     }
 
-    /**
-     * Gets Weather info for a list of zipcodes
-     */
     @OptIn(ExperimentalCoroutinesApi::class)
     fun getAllWeather(): StateFlow<WeatherListState> {
         return refreshFlow

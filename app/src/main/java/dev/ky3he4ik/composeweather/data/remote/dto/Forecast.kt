@@ -1,5 +1,7 @@
 package dev.ky3he4ik.composeweather.data.remote.dto
 
+import dev.ky3he4ik.composeweather.data.local.model.*
+import dev.ky3he4ik.composeweather.data.model.*
 import dev.ky3he4ik.composeweather.model.*
 import kotlinx.serialization.Serializable
 import java.time.LocalDate
@@ -13,7 +15,7 @@ import java.util.*
 data class ForecastContainer(
     val location: LocationData,
     val forecast: ForecastDay,
-    val alerts: AlertList
+    val alerts: AlertList? = null
 )
 
 @Serializable

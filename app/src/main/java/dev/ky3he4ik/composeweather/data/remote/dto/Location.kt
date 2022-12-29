@@ -14,8 +14,8 @@ data class LocationData(
     val localtime: String
 )
 
-fun LocationData.toDomainModel(): dev.ky3he4ik.composeweather.model.LocationData {
-    return dev.ky3he4ik.composeweather.model.LocationData(
+fun LocationData.toDomainModel(): dev.ky3he4ik.composeweather.data.local.model.LocationData {
+    return dev.ky3he4ik.composeweather.data.local.model.LocationData(
         name = name,
         region = region,
         country = country,

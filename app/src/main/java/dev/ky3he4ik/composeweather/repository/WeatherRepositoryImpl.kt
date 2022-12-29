@@ -5,7 +5,7 @@ import dev.ky3he4ik.composeweather.data.remote.dto.ForecastContainer
 import dev.ky3he4ik.composeweather.data.remote.dto.Search
 import dev.ky3he4ik.composeweather.data.remote.dto.WeatherContainer
 import dev.ky3he4ik.composeweather.data.remote.dto.asDomainModel
-import dev.ky3he4ik.composeweather.model.WeatherDomainObject
+import dev.ky3he4ik.composeweather.data.local.model.WeatherDomainObject
 
 
 class WeatherRepositoryImpl(private val weatherApi: WeatherApi) : WeatherRepository {
@@ -14,11 +14,7 @@ class WeatherRepositoryImpl(private val weatherApi: WeatherApi) : WeatherReposit
         weatherApi.retrofitService.getWeather(location)
 
     override suspend fun getForecast(location: String): NetworkResult<ForecastContainer> =
-        try {
-            weatherApi.retrofitService.getForecast(location, days = 7)
-        } catch (e: Exception) {
-            weatherApi.retrofitService.getForecast(location, days = 7)
-        }
+        weatherApi.retrofitService.getForecast(location, days = 3)
 
     override suspend fun getSearchResults(location: String): NetworkResult<List<Search>> =
         weatherApi.retrofitService.locationSearch(location)

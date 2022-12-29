@@ -51,7 +51,7 @@ interface WeatherApiService {
     suspend fun getForecast(
         @Query("q") name: String,
         @Query("days") days: Int = 3,
-        @Query("alerts") alerts: String = "yes"
+        @Query("alerts") alerts: String = "no"
     ): NetworkResult<ForecastContainer>
 }
 
